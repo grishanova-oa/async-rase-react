@@ -1,0 +1,19 @@
+.create-car {
+    margin-left: 20px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.create-car__input,
+.create-car__input-color {
+    margin-right: 5px;
+    padding: 5px;
+    border: 2px solid #00008b;
+    border-radius: 5px;
+    font-size: 16px;
+
+}
+.create-car__input-color {
+    padding: 1px;
+
+}

@@ -1,0 +1,19 @@
+.btn {
+    width: 100px;
+    font-size: 16px;
+    background-color:aliceblue;
+    border: 1px solid #00008b;
+    color:black;
+    border-radius: 10px;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: 0.4s;
+    margin: 5px;
+}
+.btn:hover {
+    background: linear-gradient(90deg,#9f80f9,#6880fe);
+    }
+.btn:active {
+    background-color: blueviolet;
+    transform: scale(0.9);
+}
