@@ -3,8 +3,8 @@ import { Button } from '../Button/Button';
 import './HeaderStyles.css';
 
 export const Header = () => {
-  const onGarageClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
-  const onWinnersClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
+  const onGarageClick = () => console.log(`Click to`);
+  const onWinnersClick = () => console.log(`Click to`);
 
   return (
     <div className="header">
