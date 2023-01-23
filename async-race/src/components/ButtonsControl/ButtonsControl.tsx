@@ -2,10 +2,13 @@ import React from 'react';
 import { Button } from '../Button/Button';
 import './ButtonsControlStyles.css';
 
-export const ButtonsControl = () => {
-  const onRaceClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
-  const onResetClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
-  const onGenerateCarsClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
+interface IButtonsControl {
+  setIsRaced: (isRaced: boolean) => void;
+}
+export const ButtonsControl = ({ setIsRaced }: IButtonsControl) => {
+  const onRaceClick = () => setIsRaced(true);
+  const onResetClick = () => console.log(`Click to`);
+  const onGenerateCarsClick = () => console.log(`Click to`);
 
   return (
     <div className="buttons-control">

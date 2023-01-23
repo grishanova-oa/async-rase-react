@@ -3,10 +3,10 @@ import './ButtonStyles.css';
 
 interface IButton {
   nameButton: string;
-  onClickButton: (name: string) => void;
+  onClickButton: () => void;
 }
 export const Button = ({ nameButton, onClickButton }: IButton) => {
-  const onClick = () => onClickButton(nameButton);
+  const onClick = () => onClickButton();
   return (
     <button type="button" className="btn" onClick={onClick}>
       {nameButton}
