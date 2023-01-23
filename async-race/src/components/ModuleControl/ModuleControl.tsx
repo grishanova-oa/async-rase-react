@@ -4,12 +4,15 @@ import { CreateCar } from '../CreateCar';
 import { UpdateCar } from '../UpdateCar';
 import './ModuleControlStyles.css';
 
-export const ModuleControl = () => {
+interface IModuleControl {
+  setIsRaced: (isRaced: boolean) => void;
+}
+export const ModuleControl = ({ setIsRaced }: IModuleControl) => {
   return (
     <div>
       <CreateCar />
       <UpdateCar />
-      <ButtonsControl />
+      <ButtonsControl setIsRaced={setIsRaced} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Button } from '../Button/Button';
 import './UpdateCarStyles.css';
 
 export const UpdateCar = () => {
-  const onUpdateCarClick = (nameButton: string) => console.log(`Click to ${nameButton}`);
+  const onUpdateCarClick = () => console.log(`Click to`);
 
   return (
     <div className="create-car">
