@@ -1,19 +1,34 @@
 import React from 'react';
-import { IGarage } from '../../types';
+import { ICar } from '../../types';
 import { GarageSection } from '../GarageSection';
+import { Pagination } from '../Pagination/Pagination';
 import './MainStyles.css';
 
 interface IMain {
+  page: number;
   isRaced: boolean;
-  garageData: IGarage[];
+  garageData: ICar[];
   velocities: Record<number, number>;
   brokenEngines: number[];
+  onSelect: (car: ICar) => void;
+  onRemove: (id: number) => void;
+  onPaginationClick: (value: boolean) => void;
 }
-export const Main = ({ isRaced, garageData, velocities, brokenEngines }: IMain) => {
+export const Main = ({
+  page,
+  isRaced,
+  garageData,
+  velocities,
+  brokenEngines,
+  onSelect,
+  onRemove,
+  onPaginationClick,
+}: IMain) => {
   return (
     <div className="main">
-      <h3>Garage: (4)</h3>
-      <h4>Page #1</h4>
+      <Pagination onPaginationClick={onPaginationClick} />
+      <h3>Garage: ({garageData.length})</h3>
+      <h4>Page #{page}</h4>
       {garageData.map((car) => (
         <GarageSection
           key={car.id}
@@ -21,6 +36,8 @@ export const Main = ({ isRaced, garageData, velocities, brokenEngines }: IMain) 
           isRaced={isRaced}
           velocity={velocities[car.id]}
           isBroken={brokenEngines.includes(car.id)}
+          onSelect={onSelect}
+          onRemove={onRemove}
         />
       ))}
     </div>

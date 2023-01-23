@@ -1,14 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ICar } from '../../types';
 import { Button } from '../Button/Button';
 import './UpdateCarStyles.css';
 
-export const UpdateCar = () => {
-  const onUpdateCarClick = () => console.log(`Click to`);
+interface IUpdateCar {
+  selectedCar: ICar | null;
+  onUpdateCar: (carName: string, color: string) => void;
+}
+
+export const UpdateCar = ({ selectedCar, onUpdateCar }: IUpdateCar) => {
+  const defaultName = selectedCar?.name || '';
+  const [carName, setCarName] = useState<string>(defaultName);
+  const [color, setColor] = useState('fff');
+  const onUpdateCarClick = () => onUpdateCar(carName, color);
+
+  useEffect(() => {
+    setCarName(defaultName);
+  }, [selectedCar]);
 
   return (
-    <div className="create-car">
-      <input type="text" className="create-car__input" />
-      <input type="color" className="create-car__input-color" />
+    <div className="update-car">
+      <input
+        type="text"
+        className="update-car__input"
+        value={carName}
+        onChange={({ target }) => setCarName(target.value)}
+      />
+      <input
+        type="color"
+        name="head"
+        value={color}
+        className="update-car__input-color"
+        onChange={({ target }) => setColor(target.value)}
+      />
       <Button nameButton="Update" onClickButton={onUpdateCarClick} />
     </div>
   );
