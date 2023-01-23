@@ -2,11 +2,11 @@
 // @ts-nocheck
 
 import React, { useRef, useState } from 'react';
-import { IGarage } from '../../types';
+import { ICar } from '../../types';
 import './CarRoadContainerStyles.css';
 
 interface ICarRoad {
-  car: IGarage;
+  car: ICar;
   isRaced: boolean;
   velocity: number;
   isBroken: boolean;
