@@ -1,0 +1,15 @@
+.garage {
+    max-width: 95%;
+    margin-top: 10px;
+
+}
+.car-container__btn {
+    display: flex;
+
+}
+.car-container__btn h3 {
+    padding-left: 10px;
+    margin: 1px;
+    align-self: end;
+}
+

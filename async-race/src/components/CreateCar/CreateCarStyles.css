@@ -3,6 +3,8 @@
     padding-left: 10px;
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
+
 }
 .create-car__input,
 .create-car__input-color {

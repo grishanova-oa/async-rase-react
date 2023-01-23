@@ -1,0 +1,24 @@
+.car-road__container {
+    position: relative;
+    margin: 5px 10px;
+    /* background-color: rgba(161,21,207, 0.3); */
+    height: 50px;
+    border-bottom: dotted rgba(30, 3, 60, 0.9);
+}
+.inner {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    background: url('../../assets/car.svg') center no-repeat;
+    transition-timing-function: linear;
+    -webkit-mask-image:url(../../assets/car.svg);
+    mask-image: url('../../assets/car.svg');
+    position: absolute;
+    top: 0%;
+}
+.car-road__container::after {
+    content: url('../../assets/finish_flag-48_44512.png');
+    position: absolute;
+    right: 10%;
+    
+}
