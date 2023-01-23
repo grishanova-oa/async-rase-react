@@ -17,21 +17,13 @@ export const CarRoadContainer = ({ car, isRaced, velocity = 10, isBroken }: ICar
 
   const left = isRaced ? '90%' : '1%';
 
-  //   const animate = (time) => {
-  //     // The 'state' will always be the initial value here
-  //     ref.current = requestAnimationFrame(animate);
-  //   };
-
   React.useEffect(() => {
-    //   ref.current = requestAnimationFrame(animate);
-
     setTimeout(() => {
       setSome('paused');
     }, 12000);
   }, []);
 
   if (isBroken) {
-    // left = getComputedStyle(ref.current).left;
     console.log('@@@@@@', left);
   }
 
