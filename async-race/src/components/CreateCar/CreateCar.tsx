@@ -4,9 +4,10 @@ import './CreateCarStyles.css';
 
 interface ICreateCar {
   onCreateCar: (name: string, color: string) => void;
+  isRaced: boolean;
 }
 
-export const CreateCar = ({ onCreateCar }: ICreateCar) => {
+export const CreateCar = ({ onCreateCar, isRaced }: ICreateCar) => {
   const [name, setName] = useState('');
   const colorInput = useRef<HTMLInputElement>(null);
   const onCreateCarClick = () => {
@@ -24,7 +25,7 @@ export const CreateCar = ({ onCreateCar }: ICreateCar) => {
         onChange={({ target }) => setName(target.value)}
       />
       <input type="color" name="head" className="create-car__input-color" ref={colorInput} />
-      <Button nameButton="Create" onClickButton={onCreateCarClick} />
+      <Button nameButton="Create" onClickButton={onCreateCarClick} disabled={isRaced} />
     </div>
   );
 };

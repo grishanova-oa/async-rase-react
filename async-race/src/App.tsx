@@ -3,6 +3,7 @@ import { CarApi } from './Api';
 import { Header } from './components/Header';
 import { Main } from './components/Main';
 import { ModuleControl } from './components/ModuleControl';
+import { WinnersSection } from './components/WinnersSection';
 import { generatedCars } from './generatedCars';
 import './styles.css';
 import { ICar } from './types';
@@ -17,17 +18,22 @@ export const App: React.FC = () => {
   const [selectedCar, setSelectedCar] = useState<ICar | null>(null);
   const [page, setPage] = useState<number>(1);
   const [winner, setWinner] = useState<ICar | null>(null);
+  const [isOpenGarage, setIsOpenGarage] = useState(false);
+  const [allCarsCount, setAllCarsCount] = useState<number>(0);
 
-  const startEngine = () => {
+  const startWinnerCount = () => {
     const valKeys = Object.entries(velocities);
     const [winnerId] = valKeys.sort((first, second) => first[1] - second[1])[0];
     const winnerCar = garageData.find((car) => car.id === +winnerId);
     if (winnerCar) {
       setTimeout(() => {
         setWinner(winnerCar);
-      }, velocities[winnerCar?.id] * 100);
+      }, velocities[winnerCar?.id] * 80);
     }
-    garageData.forEach(async (car) => {
+  };
+
+  const startEngine = (carList: ICar[] | { id: number }[]) => {
+    carList.forEach(async (car) => {
       const newBrokenEngines = [...brokenEngines];
       const { success } = await api.patchEngineDriveMode(car.id);
 
@@ -41,29 +47,44 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     if (isRaced) {
-      startEngine();
+      startEngine(garageData);
+      startWinnerCount();
     }
   }, [isRaced]);
 
-  const updateGarage = async () => {
-    const data: ICar[] = await api.loadGarage(page);
+  const updateGarage = async (actualPage = page) => {
+    const data: ICar[] = await api.loadGarage({ actualPage });
     setGarageData(data);
+
+    const allCars: ICar[] = await api.loadGarage({ allCars: true });
+    setAllCarsCount(allCars.length);
+  };
+
+  const countVelocity = () => {
+    const newVelocities: Record<number, number> = {};
+
+    garageData.forEach(async (car) => {
+      const { velocity } = await api.patchVelocity(car.id);
+
+      newVelocities[car.id] = velocity;
+
+      setVelocities(newVelocities);
+    });
   };
 
   useEffect(() => {
+    countVelocity();
+  }, [garageData]);
+
+  useEffect(() => {
     async function fetchMyAPI2() {
-      const data: ICar[] = await api.loadGarage(page);
+      const data: ICar[] = await api.loadGarage({ actualPage: page });
       setGarageData(data);
 
-      const newVelocities: Record<number, number> = {};
+      const allCars: ICar[] = await api.loadGarage({ allCars: true });
+      setAllCarsCount(allCars.length);
 
-      data.forEach(async (car) => {
-        const { velocity } = await api.patchVelocity(car.id);
-
-        newVelocities[car.id] = velocity;
-
-        setVelocities(newVelocities);
-      });
+      countVelocity();
     }
 
     fetchMyAPI2();
@@ -106,38 +127,52 @@ export const App: React.FC = () => {
     }
   };
 
+  const onReset = () => {
+    setWinner(null);
+    countVelocity();
+  };
+
   const onPaginationClick = (value: boolean) => {
     if (value) {
-      setPage(page + 1); // Needs to correct
+      const lastPage = Math.ceil(allCarsCount / 7);
+      if (page < lastPage) {
+        setPage(page + 1);
+        updateGarage(page + 1);
+      }
     } else {
       const newPage = page === 1 ? 1 : page - 1;
       setPage(newPage);
+      updateGarage(newPage);
     }
-
-    updateGarage();
   };
 
   return (
     <div className="App">
-      <Header />
+      <Header setIsOpenGarage={setIsOpenGarage} isRaced={isRaced} />
       <ModuleControl
         onUpdateCar={onUpdateCar}
         selectedCar={selectedCar}
         setIsRaced={setIsRaced}
         onCreateCar={onCreateCar}
         onGenerateCars={onGenerateCars}
-      />
-      {winner && <div>Winner is {winner.name}</div>}
-      <Main
-        page={page}
+        onReset={onReset}
         isRaced={isRaced}
-        garageData={garageData}
-        velocities={velocities}
-        brokenEngines={brokenEngines}
-        onSelect={onSelect}
-        onRemove={onRemove}
-        onPaginationClick={onPaginationClick}
       />
+      {winner && <div className="winner-name">Winner is {winner.name}</div>}
+      {isOpenGarage && <WinnersSection />}
+
+      {!isOpenGarage && (
+        <Main
+          allCarsCount={allCarsCount}
+          page={page}
+          isRaced={isRaced}
+          garageData={garageData}
+          velocities={velocities}
+          onSelect={onSelect}
+          onRemove={onRemove}
+          onPaginationClick={onPaginationClick}
+        />
+      )}
     </div>
   );
 };

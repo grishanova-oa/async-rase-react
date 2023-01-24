@@ -9,23 +9,19 @@ interface ICarRoad {
   car: ICar;
   isRaced: boolean;
   velocity: number;
-  isBroken: boolean;
 }
-export const CarRoadContainer = ({ car, isRaced, velocity = 10, isBroken }: ICarRoad) => {
+export const CarRoadContainer = ({ car, isRaced, velocity = 10 }: ICarRoad) => {
   const ref: React.RefObject<HTMLDivElement> = useRef(null);
   const [some, setSome] = useState('running');
 
   const left = isRaced ? '90%' : '1%';
+  const transition = isRaced ? `${velocity / 10}s` : '0s';
 
   React.useEffect(() => {
     setTimeout(() => {
       setSome('paused');
     }, 12000);
   }, []);
-
-  if (isBroken) {
-    console.log('@@@@@@', left);
-  }
 
   return (
     <div className="car-road__container">
@@ -34,7 +30,7 @@ export const CarRoadContainer = ({ car, isRaced, velocity = 10, isBroken }: ICar
         style={{
           background: `${car.color}`,
           left,
-          transition: `${velocity / 10}s`,
+          transition,
           animationPlayState: `${some}`,
         }}
         ref={ref}

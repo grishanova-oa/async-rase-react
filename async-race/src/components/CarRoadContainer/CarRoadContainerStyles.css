@@ -1,7 +1,6 @@
 .car-road__container {
     position: relative;
     margin: 5px 10px;
-    /* background-color: rgba(161,21,207, 0.3); */
     height: 50px;
     border-bottom: dotted rgba(30, 3, 60, 0.9);
 }
@@ -20,5 +19,4 @@
     content: url('../../assets/finish_flag-48_44512.png');
     position: absolute;
     right: 10%;
-    
 }

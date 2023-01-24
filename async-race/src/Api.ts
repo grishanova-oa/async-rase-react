@@ -7,6 +7,10 @@ interface IFetch {
   reqData?: RequestInit;
 }
 
+interface ILoadGarage {
+  actualPage?: number;
+  allCars?: boolean;
+}
 export class CarApi {
   baseUrl: string;
 
@@ -24,10 +28,10 @@ export class CarApi {
     return { success: false };
   }
 
-  loadGarage(page: number) {
+  loadGarage({ actualPage, allCars }: ILoadGarage) {
     return this.fetch({
       reqData: { method: 'get' },
-      query: `?_page=${page}&_limit=7`,
+      query: allCars ? '' : `?_page=${actualPage}&_limit=7`,
       path: 'garage',
     });
   }
