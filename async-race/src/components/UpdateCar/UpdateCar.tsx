@@ -6,9 +6,10 @@ import './UpdateCarStyles.css';
 interface IUpdateCar {
   selectedCar: ICar | null;
   onUpdateCar: (carName: string, color: string) => void;
+  isRaced: boolean;
 }
 
-export const UpdateCar = ({ selectedCar, onUpdateCar }: IUpdateCar) => {
+export const UpdateCar = ({ isRaced, selectedCar, onUpdateCar }: IUpdateCar) => {
   const defaultName = selectedCar?.name || '';
   const [carName, setCarName] = useState<string>(defaultName);
   const [color, setColor] = useState('fff');
@@ -33,7 +34,7 @@ export const UpdateCar = ({ selectedCar, onUpdateCar }: IUpdateCar) => {
         className="update-car__input-color"
         onChange={({ target }) => setColor(target.value)}
       />
-      <Button nameButton="Update" onClickButton={onUpdateCarClick} />
+      <Button nameButton="Update" onClickButton={onUpdateCarClick} disabled={isRaced} />
     </div>
   );
 };

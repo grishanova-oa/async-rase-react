@@ -1,0 +1,36 @@
+.winners-list {
+    font-size: 28px;
+    margin: 0 auto;
+    padding: 20px 5px;
+}
+.table-header {
+    background-color: hsla(0,0%,6%,.58);
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4,1fr) 2fr;
+    padding: 0 0 0 5px;
+}
+.winners-list__inner{
+    display: block;
+    justify-content: center;
+}
+.winner{
+    font-size: 22px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4,1fr) 2fr;
+    padding: 0 0 0 5px;
+
+}
+.winner__car{
+    background: url('../../assets/car.svg') center no-repeat;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    
+}
