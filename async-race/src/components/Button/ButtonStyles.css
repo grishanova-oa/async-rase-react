@@ -17,3 +17,15 @@
     background-color: blueviolet;
     transform: scale(0.9);
 }
+.disabled {
+    pointer-events: auto;
+    background-color: gray;
+    cursor: auto;
+}
+.disabled:hover {
+    background: gray;
+    }
+.disabled:active {
+    background-color: none;
+    transform: scale(1);
+}

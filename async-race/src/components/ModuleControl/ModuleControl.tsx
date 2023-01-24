@@ -11,9 +11,13 @@ interface IModuleControl {
   onCreateCar: (name: string, color: string) => void;
   onUpdateCar: (carName: string, color: string) => void;
   onGenerateCars: () => void;
+  onReset: () => void;
+  isRaced: boolean;
 }
 export const ModuleControl = ({
+  isRaced,
   onUpdateCar,
+  onReset,
   selectedCar,
   setIsRaced,
   onCreateCar,
@@ -21,9 +25,14 @@ export const ModuleControl = ({
 }: IModuleControl) => {
   return (
     <div>
-      <CreateCar onCreateCar={onCreateCar} />
-      <UpdateCar selectedCar={selectedCar} onUpdateCar={onUpdateCar} />
-      <ButtonsControl setIsRaced={setIsRaced} onGenerateCars={onGenerateCars} />
+      <CreateCar isRaced={isRaced} onCreateCar={onCreateCar} />
+      <UpdateCar isRaced={isRaced} selectedCar={selectedCar} onUpdateCar={onUpdateCar} />
+      <ButtonsControl
+        isRaced={isRaced}
+        onReset={onReset}
+        setIsRaced={setIsRaced}
+        onGenerateCars={onGenerateCars}
+      />
     </div>
   );
 };

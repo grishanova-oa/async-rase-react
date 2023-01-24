@@ -5,16 +5,27 @@ import './ButtonsControlStyles.css';
 interface IButtonsControl {
   setIsRaced: (isRaced: boolean) => void;
   onGenerateCars: () => void;
+  onReset: () => void;
+  // eslint-disable-next-line react/require-default-props
+  isRaced: boolean;
 }
-export const ButtonsControl = ({ setIsRaced, onGenerateCars }: IButtonsControl) => {
+export const ButtonsControl = ({
+  isRaced,
+  onReset,
+  setIsRaced,
+  onGenerateCars,
+}: IButtonsControl) => {
   const onRaceClick = () => setIsRaced(true);
-  const onResetClick = () => console.log(`Click to`);
+  const onResetClick = () => {
+    onReset();
+    setIsRaced(false);
+  };
 
   return (
     <div className="buttons-control">
-      <Button nameButton="Race" onClickButton={onRaceClick} />
-      <Button nameButton="Reset" onClickButton={onResetClick} />
-      <Button nameButton="Generate Cars" onClickButton={onGenerateCars} />
+      <Button nameButton="Race" onClickButton={onRaceClick} disabled={isRaced} />
+      <Button nameButton="Reset" onClickButton={onResetClick} disabled={!isRaced} />
+      <Button nameButton="Generate Cars" onClickButton={onGenerateCars} disabled={isRaced} />
     </div>
   );
 };

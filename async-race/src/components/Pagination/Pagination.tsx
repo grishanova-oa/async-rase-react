@@ -9,8 +9,8 @@ interface IPagination {
 export const Pagination = ({ onPaginationClick }: IPagination) => {
   return (
     <div className="container">
-      <Button nameButton="prev page" onClickButton={() => onPaginationClick(false)} />
-      <Button nameButton="next page" onClickButton={() => onPaginationClick(true)} />
+      <Button nameButton="<< prev page" onClickButton={() => onPaginationClick(false)} />
+      <Button nameButton=">> next page" onClickButton={() => onPaginationClick(true)} />
     </div>
   );
 };
