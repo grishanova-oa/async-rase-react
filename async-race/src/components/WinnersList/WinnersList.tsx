@@ -1,13 +1,14 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
-import { ICar } from '../../types';
+import { ICar, IWinner } from '../../types';
 import './WinnersListStyles.css';
 
 interface IWinnersList {
-  car: ICar;
-  name: string;
+  car?: ICar;
+  winner?: IWinner;
   index: number;
 }
-export const WinnersList = ({ car, name, index }: IWinnersList) => {
+export const WinnersList = ({ car, index, winner }: IWinnersList) => {
   return (
     <div className="winners-list">
       <ul className="winners-list__inner">
@@ -16,12 +17,12 @@ export const WinnersList = ({ car, name, index }: IWinnersList) => {
           <div
             className="winner__car"
             style={{
-              background: `${car.color}`,
+              background: `${car?.color}`,
             }}
           />
-          <div>{name}</div>
-          <div>1</div>
-          <div>3.71</div>
+          <div>{car?.name}</div>
+          <div>{winner?.wins}</div>
+          <div>{winner?.time}</div>
         </li>
       </ul>
     </div>

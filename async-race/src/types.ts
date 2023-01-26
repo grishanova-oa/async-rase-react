@@ -2,5 +2,9 @@ export interface ICar {
   name: string;
   color: string;
   id: number;
-  time: string;
+}
+export interface IWinner {
+  id: number;
+  wins: number;
+  time: number;
 }

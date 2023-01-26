@@ -6,7 +6,7 @@ import { ModuleControl } from './components/ModuleControl';
 import { WinnersSection } from './components/WinnersSection';
 import { generatedCars } from './generatedCars';
 import './styles.css';
-import { ICar } from './types';
+import { ICar, IWinner } from './types';
 
 const api = new CarApi('http://localhost:3000');
 
@@ -21,6 +21,20 @@ export const App: React.FC = () => {
   const [isOpenGarage, setIsOpenGarage] = useState(false);
   const [allCarsCount, setAllCarsCount] = useState<number>(0);
   const [newWinner, setAddNewWinner] = useState<ICar[]>([]);
+  const [winnersList, setWinnersList] = useState<IWinner[]>([]);
+
+  const createWinner = async (data: IWinner) => {
+    const isWinnersContain = winnersList.find((car) => car.id === data.id);
+
+    if (isWinnersContain) {
+      await api.updateWinner(data);
+    } else {
+      await api.createWinner(data);
+    }
+    const winners = await api.getWinners();
+
+    setWinnersList(winners);
+  };
 
   const startWinnerCount = () => {
     const valKeys = Object.entries(velocities);
@@ -31,8 +45,11 @@ export const App: React.FC = () => {
         setWinner(winnerCar);
         newWinner.push(winnerCar);
         setAddNewWinner(newWinner);
-        console.log('winnerList', newWinner);
       }, velocities[winnerCar?.id] * 80);
+
+      const win = winnersList.find((car) => car.id === winnerCar.id);
+      const wins = win ? win.wins + 1 : 1;
+      createWinner({ id: winnerCar.id, wins, time: velocities[winnerCar.id] });
     }
   };
 
@@ -89,6 +106,10 @@ export const App: React.FC = () => {
       setAllCarsCount(allCars.length);
 
       countVelocity();
+
+      const winners = await api.getWinners();
+
+      setWinnersList(winners);
     }
 
     fetchMyAPI2();
@@ -153,17 +174,19 @@ export const App: React.FC = () => {
   return (
     <div className="App">
       <Header setIsOpenGarage={setIsOpenGarage} isRaced={isRaced} />
-      <ModuleControl
-        onUpdateCar={onUpdateCar}
-        selectedCar={selectedCar}
-        setIsRaced={setIsRaced}
-        onCreateCar={onCreateCar}
-        onGenerateCars={onGenerateCars}
-        onReset={onReset}
-        isRaced={isRaced}
-      />
+      {!isOpenGarage && (
+        <ModuleControl
+          onUpdateCar={onUpdateCar}
+          selectedCar={selectedCar}
+          setIsRaced={setIsRaced}
+          onCreateCar={onCreateCar}
+          onGenerateCars={onGenerateCars}
+          onReset={onReset}
+          isRaced={isRaced}
+        />
+      )}
       {winner && <div className="winner-name">Winner is {winner.name}</div>}
-      {isOpenGarage && <WinnersSection newWinner={newWinner} />}
+      {isOpenGarage && <WinnersSection winnersList={winnersList} garageData={garageData} />}
 
       {!isOpenGarage && (
         <Main

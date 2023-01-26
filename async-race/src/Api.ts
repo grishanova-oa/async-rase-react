@@ -1,4 +1,4 @@
-import { ICar } from './types';
+import { ICar, IWinner } from './types';
 
 interface IFetch {
   path: string;
@@ -11,6 +11,7 @@ interface ILoadGarage {
   actualPage?: number;
   allCars?: boolean;
 }
+
 export class CarApi {
   baseUrl: string;
 
@@ -84,6 +85,42 @@ export class CarApi {
       query: `/${id}`,
       reqData: {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    });
+  }
+
+  getWinners(): Promise<IWinner[]> {
+    return this.fetch({
+      path: 'winners',
+      reqData: {
+        method: 'GET',
+      },
+    });
+  }
+
+  createWinner(data: IWinner): Promise<IWinner[]> {
+    return this.fetch({
+      path: 'winners',
+      reqData: {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    });
+  }
+
+  updateWinner(data: IWinner): Promise<IWinner[]> {
+    return this.fetch({
+      path: 'winners',
+      query: `/${data.id}`,
+      reqData: {
+        method: 'PUT',
+        body: JSON.stringify({ wins: data.wins, time: data.time }),
         headers: {
           'Content-Type': 'application/json',
         },
