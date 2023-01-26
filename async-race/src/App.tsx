@@ -20,6 +20,7 @@ export const App: React.FC = () => {
   const [winner, setWinner] = useState<ICar | null>(null);
   const [isOpenGarage, setIsOpenGarage] = useState(false);
   const [allCarsCount, setAllCarsCount] = useState<number>(0);
+  const [newWinner, setAddNewWinner] = useState<ICar[]>([]);
 
   const startWinnerCount = () => {
     const valKeys = Object.entries(velocities);
@@ -28,6 +29,9 @@ export const App: React.FC = () => {
     if (winnerCar) {
       setTimeout(() => {
         setWinner(winnerCar);
+        newWinner.push(winnerCar);
+        setAddNewWinner(newWinner);
+        console.log('winnerList', newWinner);
       }, velocities[winnerCar?.id] * 80);
     }
   };
@@ -159,7 +163,7 @@ export const App: React.FC = () => {
         isRaced={isRaced}
       />
       {winner && <div className="winner-name">Winner is {winner.name}</div>}
-      {isOpenGarage && <WinnersSection />}
+      {isOpenGarage && <WinnersSection newWinner={newWinner} />}
 
       {!isOpenGarage && (
         <Main

@@ -12,7 +12,7 @@ interface IUpdateCar {
 export const UpdateCar = ({ isRaced, selectedCar, onUpdateCar }: IUpdateCar) => {
   const defaultName = selectedCar?.name || '';
   const [carName, setCarName] = useState<string>(defaultName);
-  const [color, setColor] = useState('fff');
+  const [color, setColor] = useState('#f2f4f9');
   const onUpdateCarClick = () => onUpdateCar(carName, color);
 
   useEffect(() => {
